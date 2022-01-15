@@ -11,4 +11,13 @@ class AppStrings{
 
   static const skipButton = "Skip";
 
+  static const  hintLoginEmail = "Email";
+  static const  emailError = "Email is wrong";
+  static const  hintLoginPassword = "Password";
+  static const  passwordError = "Password is wrong";
+  static const  buttonLogin= "Login";
+  static const  forgetPassword= "Forget Password";
+  static const  registerFromLogin = "Not a member ? Sign up";
+
+
 }

@@ -8,4 +8,6 @@ class AppImageAssets{
   static const leftArrow = "assets/images/left_arrow_ic.svg";
   static const rightArrow = "assets/images/right_arrow_ic.svg";
   static const solidCircle = "assets/images/solid_circle_ic.svg";
+  static const login_ic = "assets/images/login_ic.svg";
+
 }
