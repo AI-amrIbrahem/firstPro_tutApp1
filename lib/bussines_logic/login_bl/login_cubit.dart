@@ -4,16 +4,17 @@ import 'package:firstapp_fiftychanllenge/data/network/app_api.dart';
 
 import 'package:firstapp_fiftychanllenge/data/repository/repository.dart';
 import 'package:firstapp_fiftychanllenge/data/request/login_request.dart';
+import 'package:firstapp_fiftychanllenge/widgets/state_render/state_render_implementer.dart';
+import 'package:firstapp_fiftychanllenge/widgets/state_render/state_renderer.dart';
 import 'package:meta/meta.dart';
 
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitial());
-
   //final pref =  SharedPreferences.getInstance();
 
-
+  late FlowState flowState;
   final Repo _repo = instance<Repo>();//Repo(AppServicesClient(AppPrefrences(pref)), NetworkInfo(DataConnectionChecker()));
 
   bool emailValid = false;
@@ -72,16 +73,24 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   void log(email,pass) async{
-
-    print(1);
-    print(isAuthValid());
+    load();
     if (isAuthValid() == true){
       print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-      (await _repo.login(LoginRequest(email,pass))).fold((l) => print(l.Message.toString()+"hhhhhhhhhhhhhhhhhhhhhhhhhhh"), (r) => print(r.customer.name.toString()+"hhhhhhhhhhhhhhhhhhhhhhhhhhhxxxxxx"));
+      (await _repo.login(LoginRequest(email,pass))).fold((l) => error(l.Message), (r) => error(r.customer.name.toString()));
     }
     /*
     var a = instance<AppServicesClient>() ;
     a.loginTry();*/
+  }
+
+  void load() {
+    flowState = LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE,massage: "loading");
+    emit(loadState());
+  }
+
+  void error(String msg) {
+    flowState = ErrorState(stateRendererType: StateRendererType.POPUP_ERROR_STATE,msg: msg);
+    emit(errorState());
   }
 
 }

@@ -10,4 +10,9 @@ class AppImageAssets{
   static const solidCircle = "assets/images/solid_circle_ic.svg";
   static const login_ic = "assets/images/login_ic.svg";
 
+
+  static const loading = "assets/json/loading.json";
+  static const empty = "assets/json/empty.json";
+  static const error = "assets/json/error.json";
+
 }

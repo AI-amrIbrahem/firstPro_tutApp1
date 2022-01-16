@@ -22,4 +22,5 @@ class SplashCubit extends Cubit<SplashState> {
     timer.cancel();
     Navigator.pushReplacementNamed(context,Routes.onBoardingRoute);
   }
+
 }
