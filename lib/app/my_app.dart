@@ -1,4 +1,5 @@
 import 'package:firstapp_fiftychanllenge/bussines_logic/boarding_bl/boarding_cubit.dart';
+import 'package:firstapp_fiftychanllenge/bussines_logic/forgot_bl/forgot_password_cubit.dart';
 import 'package:firstapp_fiftychanllenge/bussines_logic/login_bl/login_cubit.dart';
 import 'package:firstapp_fiftychanllenge/bussines_logic/splash_bl/splash_cubit.dart';
 import 'package:firstapp_fiftychanllenge/resourses/app_theme.dart';
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => LoginCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ForgotPasswordCubit(),
         ),
       ],
       child: MaterialApp(

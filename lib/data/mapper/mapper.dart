@@ -1,6 +1,7 @@
 import 'package:firstapp_fiftychanllenge/data/models/auth_model.dart';
 import 'package:firstapp_fiftychanllenge/data/models/contacts_model.dart';
 import 'package:firstapp_fiftychanllenge/data/models/customer_model.dart';
+import 'package:firstapp_fiftychanllenge/data/models/forgot_model.dart';
 import 'package:firstapp_fiftychanllenge/data/response/responses.dart';
 import 'package:firstapp_fiftychanllenge/app/extensions.dart';
 extension CustomerResponseMapper on CustomerResponse?{
@@ -17,5 +18,11 @@ extension ContactsResponseMapper on ContactsResponse?{
 extension AuthResponseMapper on AuthenticationResponse?{
   AuthResponseModel toDomin(){
     return AuthResponseModel(this?.customer?.toDomin()??CustomerModel("","",0),this?.contacts?.toDomin()??ContactsModel("","",""));
+  }
+}
+
+extension forgotResponseMapper on ForgoPasswordResponse?{
+  ForgoPasswordResponseModel toDomin(){
+    return ForgoPasswordResponseModel(this?.support?.orEmpty()??"",this?.message?.orEmpty()??"",this?.status?.orEmpty()??0);
   }
 }

@@ -4,9 +4,9 @@ part 'responses.g.dart';
 @JsonSerializable()
 class BaseResponse{
   @JsonKey(name: "status")
-  late int? status;
+   int? status;
   @JsonKey(name: "message")
-  late String? message;
+   String? message;
 
 }
 
@@ -52,5 +52,18 @@ class AuthenticationResponse extends BaseResponse{
 
   factory AuthenticationResponse.fromJson(json)=>_$AuthenticationResponseFromJson(json);
   Map<String,dynamic> authResponseToJson() => _$AuthenticationResponseToJson(this);
+
+  AuthenticationResponse.NotFound();
+}
+
+@JsonSerializable()
+class ForgoPasswordResponse extends BaseResponse{
+  @JsonKey(name: "support")
+  String? support;
+
+  ForgoPasswordResponse.NotFound();
+  ForgoPasswordResponse(this.support);
+  factory ForgoPasswordResponse.fromJson(json)=>_$ForgoPasswordResponseFromJson(json);
+  Map<String,dynamic> forgotPasswordToJson() => _$ForgoPasswordResponseToJson(this);
 
 }

@@ -1,5 +1,7 @@
+import 'package:firstapp_fiftychanllenge/app/di.dart';
 import 'package:firstapp_fiftychanllenge/bussines_logic/boarding_bl/boarding_cubit.dart';
 import 'package:firstapp_fiftychanllenge/data/models/slider_model.dart';
+import 'package:firstapp_fiftychanllenge/data/pref/app_pref.dart';
 import 'package:firstapp_fiftychanllenge/resourses/app_assets.dart';
 import 'package:firstapp_fiftychanllenge/resourses/app_color.dart';
 import 'package:firstapp_fiftychanllenge/resourses/app_strings.dart';
@@ -104,6 +106,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () {
+                  instance<AppPrefrences>().setOnBoardingScreenView();
                   Navigator.pushReplacementNamed(context,Routes.loginRoute);
                 },
                 child: Text(

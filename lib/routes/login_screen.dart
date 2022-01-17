@@ -16,37 +16,32 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var bProvider = BlocProvider.of<LoginCubit>(context);
-    //bProvider.flowState.getScreenWidget(context, _getContent(bProvider), (){});
 
     return BlocBuilder<LoginCubit, LoginState>(
       buildWhen: (previous, current) {
-        //previous is LoginInitial ? print("aaaaa what"):print("aaaaa what1");
-        print ("$previous            cccc $current");
-        if (current is loadState||current is errorState){
-          print ("$previous            cccca10 $current");
+        if (current is loadState ||
+            current is errorState /*||current is successState*/) {
           return true;
-
-        }
-
-        else
+        } else
           return false;
       },
-    builder: (context, state) {
-      print(state);
-      print("amr we are here ");
-      if (state is loadState){
-        print("amr we are here in loading");
+      builder: (context, state) {
+        if (state is loadState) {
+          return bProvider.flowState
+              .getScreenWidget(context, _getContent(bProvider, context), () {});
+        } else if (state is errorState) {
+          return bProvider.flowState
+              .getScreenWidget(context, _getContent(bProvider, context), () {});
+        }
+        /*else if (state is successState){
         return bProvider.flowState.getScreenWidget(context, _getContent(bProvider,context), (){});
-      }else if (state is errorState){
-        print("amr we are here in error");
-        return bProvider.flowState.getScreenWidget(context, _getContent(bProvider,context), (){});
-      }else
-      return _getContent(bProvider,context);
-  },
-);
+      }*/
+        return _getContent(bProvider, context);
+      },
+    );
   }
 
-  _getContent(LoginCubit bProvider,BuildContext context){
+  _getContent(LoginCubit bProvider, BuildContext context) {
     final emailControler = TextEditingController();
     final passControler = TextEditingController();
     return Scaffold(
@@ -60,7 +55,6 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               children: [
                 Image.asset(AppImageAssets.splashLogo),
-                //SvgPicture.asset(AppImageAssets.login_ic),
                 SizedBox(
                   height: AppSize.s12,
                 ),
@@ -69,8 +63,6 @@ class LoginScreen extends StatelessWidget {
                       left: AppPading.p18, right: AppPading.p18),
                   child: BlocBuilder<LoginCubit, LoginState>(
                     builder: (context, state) {
-                      print("xzx amr 00 " + bProvider.emailValid.toString());
-
                       return TextFormField(
                           controller: emailControler,
                           keyboardType: TextInputType.emailAddress,
@@ -120,7 +112,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding:
-                  EdgeInsets.only(left: AppPading.p8, right: AppPading.p18),
+                      EdgeInsets.only(left: AppPading.p8, right: AppPading.p18),
                   child: BlocBuilder<LoginCubit, LoginState>(
                     builder: (context, state) {
                       if (bProvider.isAuthValid()) {
@@ -129,7 +121,7 @@ class LoginScreen extends StatelessWidget {
                             print(emailControler.text.toString() +
                                 passControler.text.toString());
                             bProvider.log(emailControler.text.toString(),
-                                passControler.text.toString());
+                                passControler.text.toString(), context);
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(
@@ -154,13 +146,16 @@ class LoginScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                Padding(padding: const EdgeInsets.only(right: AppPading.p28,left: AppPading.p28),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      right: AppPading.p28, left: AppPading.p28),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextButton(
                         onPressed: () {
-                          Navigator.pushReplacementNamed(context,Routes.forgotPasswordRoute);
+                          Navigator.pushReplacementNamed(
+                              context, Routes.forgotPasswordRoute);
                         },
                         child: Text(
                           AppStrings.forgetPassword,
@@ -169,7 +164,8 @@ class LoginScreen extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.pushReplacementNamed(context,Routes.registerRoute);
+                          Navigator.pushReplacementNamed(
+                              context, Routes.registerRoute);
                         },
                         child: Text(
                           AppStrings.registerFromLogin,

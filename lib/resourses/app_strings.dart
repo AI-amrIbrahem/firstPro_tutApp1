@@ -24,5 +24,8 @@ class AppStrings{
 
   static const ok ="ok";
 
+  static const Email ="Send";
+
+
 
 }

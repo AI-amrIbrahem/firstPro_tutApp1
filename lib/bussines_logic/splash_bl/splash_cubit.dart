@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:firstapp_fiftychanllenge/app/di.dart';
+import 'package:firstapp_fiftychanllenge/data/pref/app_pref.dart';
 import 'package:firstapp_fiftychanllenge/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
@@ -11,6 +13,7 @@ class SplashCubit extends Cubit<SplashState> {
   SplashCubit() : super(SplashInitial());
   int splashDuration = 3;
   late Timer timer;
+  AppPrefrences appPrefrences = instance<AppPrefrences>();
 
   void startDelay(){
      timer = Timer(Duration(seconds: splashDuration),(){
@@ -20,7 +23,16 @@ class SplashCubit extends Cubit<SplashState> {
 
   void navPage(BuildContext context){
     timer.cancel();
-    Navigator.pushReplacementNamed(context,Routes.onBoardingRoute);
+
+    if (appPrefrences.isUserLoggedIn()) {
+      Navigator.pushReplacementNamed(context,Routes.mainRoute);
+    } else{
+      if (appPrefrences.isOnBoardingScreenView()){
+        Navigator.pushReplacementNamed(context,Routes.loginRoute);
+      }else{
+        Navigator.pushReplacementNamed(context,Routes.onBoardingRoute);
+      }
+    }
   }
 
 }

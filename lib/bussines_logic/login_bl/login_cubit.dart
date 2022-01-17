@@ -1,11 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:firstapp_fiftychanllenge/app/di.dart';
-import 'package:firstapp_fiftychanllenge/data/network/app_api.dart';
+import 'package:firstapp_fiftychanllenge/data/pref/app_pref.dart';
 
 import 'package:firstapp_fiftychanllenge/data/repository/repository.dart';
 import 'package:firstapp_fiftychanllenge/data/request/login_request.dart';
+import 'package:firstapp_fiftychanllenge/routes.dart';
 import 'package:firstapp_fiftychanllenge/widgets/state_render/state_render_implementer.dart';
 import 'package:firstapp_fiftychanllenge/widgets/state_render/state_renderer.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 
 part 'login_state.dart';
@@ -72,11 +74,18 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  void log(email,pass) async{
+  void log(email,pass,context) async{
     load();
     if (isAuthValid() == true){
       print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-      (await _repo.login(LoginRequest(email,pass))).fold((l) => error(l.Message), (r) => error(r.customer.name.toString()));
+      (await _repo.login(LoginRequest(email,pass))).fold((l) => error(l.Message), (r){
+        //navigate
+        flowState = ContentState();
+        instance<AppPrefrences>().setUserLoggedIn();
+        Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+        //emit(successState());
+
+      });
     }
     /*
     var a = instance<AppServicesClient>() ;

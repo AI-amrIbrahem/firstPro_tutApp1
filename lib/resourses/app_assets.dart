@@ -14,5 +14,6 @@ class AppImageAssets{
   static const loading = "assets/json/loading.json";
   static const empty = "assets/json/empty.json";
   static const error = "assets/json/error.json";
+  static const success = "assets/json/success.json";
 
 }
